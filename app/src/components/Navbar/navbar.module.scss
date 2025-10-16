@@ -1,0 +1,13 @@
+@reference "../../app/globals.css";
+
+.navbar {
+  @apply flex justify-between items-center p-4 bg-primary text-white;
+}
+
+.title {
+  @apply text-4xl font-bold;
+}
+
+.link {
+  @apply hover:font-bold;
+}

@@ -1,0 +1,5 @@
+@reference "../../../app/globals.css";
+
+.block {
+  @apply p-4 border border-gray-300 rounded bg-white shadow;
+}

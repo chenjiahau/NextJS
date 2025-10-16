@@ -1,0 +1,5 @@
+@reference "../../../app/globals.css";
+
+.primary-content {
+  @apply p-4 overflow-y-auto bg-white border border-gray-300 rounded-xl shadow-md;
+}

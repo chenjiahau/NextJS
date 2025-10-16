@@ -1,0 +1,16 @@
+@reference "../../../app/globals.css";
+
+.form-group {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem;
+
+  .form-group__left {
+    @apply flex justify-end items-baseline;
+    min-width: 200px;
+  }
+
+  .form-group__right {
+    @apply flex flex-col gap-1;
+  }
+}

@@ -1,0 +1,20 @@
+@reference "../../../app/globals.css";
+
+.fab {
+  @apply fixed z-50 right-6 bottom-6 inline-flex h-14 w-14 items-center justify-center;
+
+  /* shape & color */
+  @apply rounded-full shadow-lg text-white bg-primary;
+
+  /* hover / active states */
+  @apply hover:opacity-90 active:scale-95;
+
+  /* focus styles */
+  @apply focus-visible:outline-none
+         focus-visible:ring-2
+         focus-visible:ring-offset-2
+         focus-visible:ring-primary/60;
+
+  /* motion */
+  @apply transition-transform;
+}

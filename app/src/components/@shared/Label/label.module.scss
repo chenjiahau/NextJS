@@ -1,0 +1,6 @@
+@reference "../../../app/globals.css";
+
+.label {
+  @apply flex justify-center items-center bg-blue-500 text-white font-bold rounded p-2;
+  min-width: 200px;
+}

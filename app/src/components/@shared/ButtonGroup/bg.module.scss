@@ -1,0 +1,5 @@
+@reference "../../../app/globals.css";
+
+.button-group {
+  @apply flex gap-2 justify-end;
+}

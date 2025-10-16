@@ -16,7 +16,3 @@
   width: 100vw;
   height: 100vh;
 }
-
-.primary-content {
-  @apply p-4 overflow-y-auto bg-secondary;
-}

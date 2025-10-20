@@ -5,7 +5,10 @@ drop_db:
 	docker exec -it blog-db dropdb blog -U blog
 
 init_prisma:
-	npx prisma migrate dev --name init
+	npx prisma init
+
+generate:
+	npx prisma generate
 
 generate_migration:
 	npx prisma migrate dev --name ${message}

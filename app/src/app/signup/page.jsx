@@ -4,7 +4,7 @@ import authFormStyle from "@/styles/modules/auth.form.module.scss";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { tokenStore } from "@/lib/token.client";
+import { tokenStore } from "@/lib/token.store";
 
 export default function SignupPage() {
   const router = useRouter();

@@ -4,10 +4,12 @@ import authFormStyle from "@/styles/modules/auth.form.module.scss";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { tokenStore } from "@/lib/token.client";
+import { useAuth } from "@/providers/AuthProvider";
+import { tokenStore } from "@/lib/token.store";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,8 +43,9 @@ export default function LoginPage() {
         return;
       }
 
-      // Save token to local storage
-      tokenStore.save(json.token);
+      tokenStore.save(json.token); // Save token to local storage
+      login(json.token); // Update auth context
+
       setSuccess("Login successful! Redirecting...");
       setTimeout(() => {
         router.replace("/");

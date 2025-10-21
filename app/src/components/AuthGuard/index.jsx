@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { tokenStore } from "@/lib/token.client";
+import { tokenStore } from "@/lib/token.store";
 
 const PUBLIC_ROUTES = ["/login", "/signup"];
 

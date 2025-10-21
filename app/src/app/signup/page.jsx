@@ -2,8 +2,9 @@
 
 import authFormStyle from "@/styles/modules/auth.form.module.scss";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { tokenStore } from "@/lib/token.client";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -64,6 +65,14 @@ export default function SignupPage() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    // Redirect if already logged in
+    const token = tokenStore.get();
+    if (token) {
+      router.replace("/");
+    }
+  }, [router]);
 
   return (
     <main className={authFormStyle.container}>

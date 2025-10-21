@@ -2,8 +2,9 @@
 
 import authFormStyle from "@/styles/modules/auth.form.module.scss";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { tokenStore } from "@/lib/token.client";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -40,8 +41,8 @@ export default function LoginPage() {
         return;
       }
 
-      // Save token (no cookies)
-      sessionStorage.setItem("token", json.token);
+      // Save token to local storage
+      tokenStore.save(json.token);
       setSuccess("Login successful! Redirecting...");
       setTimeout(() => {
         router.replace("/");
@@ -51,6 +52,14 @@ export default function LoginPage() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    // Redirect if already logged in
+    const token = tokenStore.get();
+    if (token) {
+      router.replace("/");
+    }
+  }, [router]);
 
   return (
     <main className={authFormStyle.container}>

@@ -1,0 +1,9 @@
+@reference "../../app/globals.css";
+
+.success_message {
+  @apply rounded-md border border-green-200 bg-green-50 mb-4 px-3 py-2 text-sm text-green-700;
+}
+
+.error_message {
+  @apply rounded-md border border-red-200 bg-red-50 mb-4 px-3 py-2 text-sm text-red-700;
+}

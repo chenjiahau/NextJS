@@ -1,16 +1,15 @@
 import { jwtVerify } from "jose";
 
-const secret = new TextEncoder().encode(process.env.JWT_SECRET || "dev-secret");
+export const secret = new TextEncoder().encode(process.env.JWT_SECRET || "dev-secret");
 
-// Read "Authorization: Bearer <token>" and verify it.
 export async function requireAuthFromRequest(request) {
-  const hdr = request.headers.get("authorization") || "";
-  const token = hdr.startsWith("Bearer ") ? hdr.slice(7) : null;
-  if (!token) return null;
+  const authHeader = request.headers.get("authorization");
+  if (!authHeader?.startsWith("Bearer ")) return null;
 
+  const token = authHeader.split(" ")[1]; // Extract the token part
   try {
     const { payload } = await jwtVerify(token, secret);
-    return payload;
+    return payload; // e.g., { sub: "userId", email: "..." }
   } catch {
     return null;
   }

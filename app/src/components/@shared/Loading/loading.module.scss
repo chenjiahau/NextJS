@@ -1,0 +1,13 @@
+@reference "../../../app/globals.css";
+
+.loading {
+  @apply flex h-screen items-center justify-center;
+}
+
+.spinner {
+  @apply animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent;
+}
+
+.text {
+  @apply ml-3 text-primary text-lg;
+}

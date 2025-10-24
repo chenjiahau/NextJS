@@ -70,7 +70,7 @@ export default function SignupPage() {
     // Redirect if already logged in
     const token = tokenStore.get();
     if (token) {
-      router.replace("/");
+      router.replace("/home");
     }
   }, [router]);
 

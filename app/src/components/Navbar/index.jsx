@@ -4,6 +4,7 @@ import style from "./navbar.module.scss";
 import Link from "next/link";
 import { useAuth } from "@/providers/AuthProvider";
 import { useRouter } from "next/navigation";
+import { tokenStore } from "@/lib/token.store";
 
 export default function Navbar() {
   const router = useRouter();
@@ -18,16 +19,24 @@ export default function Navbar() {
     <nav className={style.navbar}>
       <h1 className={style.title}>My Blog</h1>
       <ul className='flex space-x-4'>
-        <li>
-          <Link href='/' className={style.link}>
-            Home
-          </Link>
-        </li>
+        {loggedIn ? (
+          <li>
+            <Link href='/home' className={style.link}>
+              Home
+            </Link>
+          </li>
+        ) : (
+          <li>
+            <Link href='/' className={style.link}>
+              Home
+            </Link>
+          </li>
+        )}
 
         {loggedIn && (
           <>
             <li>
-              <Link href='/article' className={style.link}>
+              <Link href='/home/article' className={style.link}>
                 Article
               </Link>
             </li>

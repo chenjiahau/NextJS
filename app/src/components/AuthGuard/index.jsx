@@ -1,32 +1,40 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { tokenStore } from "@/lib/token.store";
 
-const PUBLIC_ROUTES = ["/login", "/signup"];
+const PUBLIC = ["/login", "/signup"];
 
 export default function AuthGuard({ children }) {
   const router = useRouter();
   const pathname = usePathname();
-  const [loading, setLoading] = useState(true);
+  const [ready, setReady] = useState(false);
+  const redirecting = useRef(false);
+  const alive = useRef(true);
 
   useEffect(() => {
-    // If current route is public, don’t guard it.
-    if (PUBLIC_ROUTES.includes(pathname)) {
-      setLoading(false);
+    alive.current = true;
+    return () => {
+      alive.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    // never guard public routes
+    if (PUBLIC.some((p) => pathname === p || pathname.startsWith(p + "/"))) {
+      setReady(true);
       return;
     }
 
-    const token = tokenStore.get();
+    if (redirecting.current) return; // avoid double replace
 
+    const token = tokenStore.get();
     if (!token) {
-      // render nothing while redirecting; avoids flashing "Loading..."
+      redirecting.current = true;
       router.replace("/login");
       return;
     }
 
-    let cancelled = false;
     (async () => {
       try {
         const res = await fetch("/api/auth/verify", {
@@ -34,20 +42,18 @@ export default function AuthGuard({ children }) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ token }),
         });
-        if (!res.ok) throw new Error("Invalid token");
-        if (!cancelled) setLoading(false);
+        if (!res.ok) throw new Error("invalid");
+        if (alive.current) setReady(true);
       } catch {
-        if (!cancelled) router.replace("/login");
+        if (!redirecting.current) {
+          redirecting.current = true;
+          router.replace("/login");
+        }
       }
     })();
-
-    return () => {
-      cancelled = true;
-    };
   }, [pathname, router]);
 
-  // While redirecting or checking, render nothing to avoid the "Loading..." flash
-  if (loading) return null;
-
+  // Render nothing while checking/redirecting (prevents Suspense churn)
+  if (!ready) return null;
   return children;
 }

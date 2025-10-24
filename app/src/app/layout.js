@@ -1,7 +1,6 @@
 import "./globals.css";
 
 import AuthProvider from '@/providers/AuthProvider';
-import AuthGuard from '@/components/AuthGuard';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -15,13 +14,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <AuthProvider>
-          <AuthGuard>
-            <div className="layout">
-              <Navbar />
-              {children}
-              <Footer />
-            </div>
-          </AuthGuard>
+          <div className="layout">
+            <Navbar />
+            {children}
+            <Footer />
+          </div>
         </AuthProvider>
       </body>
     </html>

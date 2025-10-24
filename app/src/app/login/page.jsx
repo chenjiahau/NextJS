@@ -48,7 +48,7 @@ export default function LoginPage() {
 
       setSuccess("Login successful! Redirecting...");
       setTimeout(() => {
-        router.replace("/");
+        router.replace("/home");
       }, 3000);
     } catch (e) {
       setError("Network error. Please try again.");
@@ -60,7 +60,7 @@ export default function LoginPage() {
     // Redirect if already logged in
     const token = tokenStore.get();
     if (token) {
-      router.replace("/");
+      router.replace("/home");
     }
   }, [router]);
 
